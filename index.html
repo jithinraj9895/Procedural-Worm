@@ -15,6 +15,7 @@
 
         const BALLS = [];
         let countOfBalls = 2;
+        let globalRadius = 15;
 
         class Ballbody{
             x = 0
@@ -41,8 +42,8 @@
             }
         }
 
-        let circleBall = new Ballbody(50,"red");
-        let centerBall = new Ballbody(50,"black");
+        let circleBall = new Ballbody(globalRadius,"red");
+        let centerBall = new Ballbody(globalRadius,"black");
 
         //initial two balls head and tail
         BALLS[0] = circleBall; 
@@ -103,10 +104,18 @@
             const rect = canvas.getBoundingClientRect();
             mX = event.clientX - rect.left;
             my = mouseY = event.clientY - rect.top;
+            updateBodyOfWorm();
             // Update circle ball position
             updateCircleBallPosition2(mX,my);
             // Redraw
             draw();
+        }
+
+
+        function updateBodyOfWorm(){
+            for(let i = 2;i<BALLS.length;i++){
+                BALLS[i].radius = globalRadius;
+            }
         }
 
         // Add event listener for mouse movements
@@ -115,7 +124,7 @@
         let nxtBallcolor = "grey";
         // Mouse click to add one more body ball.
         canvas.addEventListener('click', (event)=>{
-            let ball = new Ballbody(50,nxtBallcolor);
+            let ball = new Ballbody(globalRadius,nxtBallcolor);
             if(nxtBallcolor == "black"){
                 nxtBallcolor = "grey";
             }else{
